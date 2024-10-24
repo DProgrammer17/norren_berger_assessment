@@ -45,6 +45,12 @@ class LoginNotifier extends Notifier<LoginVM> {
     context.showToast(message: ErrorStrings.pleaseFillAllFields);
   }
 
+  void clearFields(){
+    state.emailController.clear();
+    state.nameController.clear();
+    state.otpController.clear();
+  }
+
   Future<void> login(BuildContext context) async {
     state = state.copyWith(isLoading: true);
     try {
@@ -83,6 +89,7 @@ class LoginNotifier extends Notifier<LoginVM> {
       if(context.mounted){
         context.showToast(message: AppStrings.otpVerified);
         context.pushAndPopAllSuper(const ProductsPage());
+        clearFields();
       }
     } catch (error, _) {
       state = state.copyWith(isLoading: false);
